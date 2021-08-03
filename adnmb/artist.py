@@ -53,7 +53,7 @@ def draw_post_list(post_models):
         console.print('no reply')
         return
     for idx, model in enumerate(post_models):
-        console.print(f'id: {idx} \t {model.content}')
+        console.print(f'{idx}: \t {model.content}')
 
 @screen_clear
 @draw_info_check
@@ -70,4 +70,4 @@ def draw_categories(category_models):
 @draw_info_check
 def draw_threads(thread_models):
     for idx, model in enumerate(thread_models):
-        console.print(f'id: {idx} \t {model.content}')
+        console.print(f'{idx}: \t {model.content}')
