@@ -44,7 +44,7 @@ def draw_info(info_model):
         level_info = 'info: '
     if info_model.level == InfoLevel.ERROR:
         level_info = 'error: '
-    console.print(f'{level_info}: {info_model.text}')
+    console.print(f'{level_info}{info_model.text}')
 
 @screen_clear
 @draw_info_check
