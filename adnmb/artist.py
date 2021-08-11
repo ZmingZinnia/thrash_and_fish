@@ -70,4 +70,4 @@ def draw_categories(category_models):
 @draw_info_check
 def draw_threads(thread_models):
     for idx, model in enumerate(thread_models):
-        console.print(f'{idx}: \t {model.content}')
+        console.print(f'{idx}: \t {model.content.strip()}')

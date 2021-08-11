@@ -5,7 +5,7 @@ from adnmb.artist import draw_categories, draw_threads, draw_info, draw_post_lis
 
 
 class Runner(Cmd):
-    prompt = "adnmb"
+    prompt = "adnmb -> "
     adnmb_client = Adnmb()
     current_cateogry = None
 
