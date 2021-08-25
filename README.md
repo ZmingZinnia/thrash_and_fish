@@ -1,18 +1,22 @@
 # thrash_and_fish
 
-you can visit adnmb by command
+you can visit forum by command
 
 #### Run
 
-Use pip install to install all dependencies
+use pip install to install all dependencies
 
 `pip install requirements.txt`
 
 then run program by command
 
-`bash run.bash`
+`bash run.bash nga`
 
 
 
 - TODO
- - [ ] visit nga
+- [x] visit nga
+- [ ] less code
+- [ ] jump page
+- [ ] record history
+- [ ] jump history
