@@ -19,6 +19,14 @@ class Runner(Cmd):
             print('no threads')
         draw_threads(self.client.thread_models)
 
+    def do_jp(self, idx):
+        info = self.client.change_post_page(idx)
+        if info:
+            draw_info(info)
+        else:
+            post_list = self.client.get_next_post()
+            draw_posts(post_list)
+
     def do_np(self, *args):
         """Next page of post"""
         post_list = self.client.get_next_post()

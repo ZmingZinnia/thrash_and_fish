@@ -110,6 +110,14 @@ class NGA:
                                    create_time=timestamp_to_datetime(item['postdatetimestamp'])))
         return posts
 
+    def change_post_page(self, idx):
+        if str(idx).isdigit():
+            idx = int(idx)
+        if not str(idx).isdigit() or (idx > self.max_post_page and idx != 1) or idx < 0:
+            return InfoModel(level=InfoLevel.ERROR, text=f"invalid index number: {idx}")
+
+        self.post_page = idx - 1 if idx > 1 else 1
+
     def get_next_post(self):
         if not self.current_thread:
             return InfoModel(level=InfoLevel.ERROR, text="please select thread first")

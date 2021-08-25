@@ -17,6 +17,6 @@ then run program by command
 - TODO
 - [x] visit nga
 - [ ] less code
-- [ ] jump page
+- [x] jump page
 - [ ] record history
 - [ ] jump history
