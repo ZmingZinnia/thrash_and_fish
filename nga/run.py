@@ -7,7 +7,6 @@ from client import NGA
 class Runner(Cmd):
     prompt = "nga -> "
     client = NGA()
-    current_cateogry = None
 
     def do_q(self, *args):
         """Quit"""
@@ -24,13 +23,15 @@ class Runner(Cmd):
         if info:
             draw_info(info)
         else:
+            post_page, max_post_page = self.client.post_page, self.client.max_post_page
             post_list = self.client.get_next_post()
-            draw_posts(post_list)
+            draw_posts(post_list, post_page, max_post_page)
 
     def do_np(self, *args):
         """Next page of post"""
+        post_page, max_post_page = self.client.post_page, self.client.max_post_page
         post_list = self.client.get_next_post()
-        draw_posts(post_list)
+        draw_posts(post_list, post_page, max_post_page)
 
     def do_nt(self, *args):
         """Next page of thread"""

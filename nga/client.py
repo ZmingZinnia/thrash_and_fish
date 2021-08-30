@@ -85,6 +85,7 @@ class NGA:
             return InfoModel(level=InfoLevel.ERROR, text='invlaid thread index')
         thread_index = int(thread_index)
         self.current_thread = self.thread_models[thread_index]
+        self.post_page = 0
         self.thread_page = 0
         return InfoModel(level=InfoLevel.INFO, text='thread changed')
 

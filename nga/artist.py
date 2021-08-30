@@ -65,6 +65,7 @@ def draw_threads(thread_models):
 
 @screen_clear
 @draw_info_check
-def draw_posts(post_models):
+def draw_posts(post_models, current_page, total_page):
+    console.print(f"current_page/total_page: {current_page}/{total_page}")
     for idx, model in enumerate(post_models):
-        console.print(f"{idx}: {model.content}\tauthor: {model.author}")
+        console.print(f"{idx}: {model.content}\tauthor: {model.author.strip()}")
