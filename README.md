@@ -10,7 +10,13 @@ use pip install to install all dependencies
 
 then run program by command
 
-`bash run.bash nga`
+`bash run.sh nga`
+
+#### Build
+
+just want to execute the binary file
+
+`bash build.sh nga`
 
 
 
