@@ -117,7 +117,7 @@ class NGA:
         if not str(idx).isdigit() or (idx > self.max_post_page and idx != 1) or idx < 0:
             return InfoModel(level=InfoLevel.ERROR, text=f"invalid index number: {idx}")
 
-        self.post_page = idx - 1 if idx > 1 else 1
+        self.post_page = idx - 1 if idx > 0 else 0
 
     def get_next_post(self):
         if not self.current_thread:
