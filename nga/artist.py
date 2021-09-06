@@ -68,4 +68,4 @@ def draw_threads(thread_models):
 def draw_posts(post_models, current_page, total_page):
     console.print(f"current_page/total_page: {current_page}/{total_page}")
     for idx, model in enumerate(post_models):
-        console.print(f"{idx}: {model.content}\tauthor: {model.author.strip()}")
+        console.print(f"{idx}: {model.content}\t {model.author.strip()}  {model.create_time}")
