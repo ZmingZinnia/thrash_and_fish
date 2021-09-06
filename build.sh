@@ -14,6 +14,7 @@ if [ "$req" != "$installed_req" ];  then
     echo "Please use the new environment and install all dependencies using pip install"
 elif [[ "$1" =~ ^(adnmb|nga)$ ]]; then
     pyinstaller $module/run.py -F --clean -p $SCRIPTPATH:$SCRIPTPATH/$module --distpath $SCRIPTPATH --workpath /tmp/thrash_and_fish_build --specpath /tmp/thrash_and_fish_build -n exec_$module
+    sudo cp exec_$module /usr/bin/
 else
     echo "forum $1 not implemented"
 fi
