@@ -103,10 +103,13 @@ class NGA:
         self.thread_models = self.get_thread_model_by_json(rj)
         return self.thread_models
 
+    def get_real_content(self, content: str):
+        return content.split('[/quote]')[-1]
+
     def get_post_model_by_json(self, json_data):
         posts = []
         for item in json_data['result']:
-            posts.append(PostModel(post_id=item['pid'], title=item['subject'], content=item['content'],
+            posts.append(PostModel(post_id=item['pid'], title=item['subject'], content=self.get_real_content(item['content']),
                                    author_id=item['author']['uid'], author=item['author']['username'],
                                    create_time=timestamp_to_datetime(item['postdatetimestamp'])))
         return posts
