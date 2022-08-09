@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
+import json
+import os
 from urllib.parse import urlencode, urlunparse, urlparse, parse_qsl
 from typing import List, Union
 from datetime import datetime
@@ -7,14 +9,19 @@ from datetime import datetime
 from model import CategoryModel, InfoLevel, InfoModel, ThreadModel, PostModel
 import config
 
+COOKIE_FILE = os.path.join(os.path.split(__file__)[0], '_cookie')
 TOP_CATEGORIES = config.nga_config.get('top_categories', [])
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G9650 Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.110 Mobile Safari/537.36',
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'X-USER-AGENT': 'Nga_Official/90013(samsung SM-G9650;Android 10)',
     'Host': 'ngabbs.com',
-    'If-Modified-Since': 'Wed, 25 Aug 2021 07:40:11 GMT'
+    'If-Modified-Since': 'Wed, 25 Aug 2021 07:40:11 GMT',
 }
+if os.path.exists(COOKIE_FILE):
+    with open(COOKIE_FILE) as f:
+        cookie = json.load(f)
+        HEADERS.update(cookie)
 
 def timestamp_to_datetime(ts):
     return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
