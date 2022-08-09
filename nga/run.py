@@ -54,6 +54,10 @@ class Runner(Cmd):
             self.client.get_categories()
         draw_categories(self.client.categories)
 
+    def do_rp(self, text):
+        """Reply thread"""
+        self.client.post_content(str(text))
+
     def cmdloop(self):
         print("please input ? to visit all command")
         super().cmdloop(self)

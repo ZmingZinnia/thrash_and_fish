@@ -133,6 +133,14 @@ class NGA:
         rj = requests.post(url, headers=HEADERS, data=data).json()
         if rj['code'] != 0:
             return InfoModel(level=InfoLevel.ERROR, text=rj['msg'])
-        self.max_post_page= rj['totalPage']
+        self.max_post_page = rj['totalPage']
         models = self.get_post_model_by_json(rj)
         return models
+
+    def post_content(self, text: str):
+        if not self.current_thread:
+            return InfoModel(level=InfoLevel.ERROR, text="please select thread first")
+        url = add_query_string(self.api_url, {'__lib': 'post', '__act': 'reply'})
+        rj = requests.post(url, headers=HEADERS, data={'tid': self.current_thread.id, 'content': text}).json()
+        if rj['code'] != 0:
+            return InfoModel(level=InfoLevel.ERROR, text=rj['msg'])
