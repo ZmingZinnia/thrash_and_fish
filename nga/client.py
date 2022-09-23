@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 import json
+import re
 import os
 from urllib.parse import urlencode, urlunparse, urlparse, parse_qsl
 from typing import List, Union
@@ -25,6 +26,9 @@ if os.path.exists(COOKIE_FILE):
 
 def timestamp_to_datetime(ts):
     return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+
+def re_sub_add_page_sign(matchobj):
+    return matchobj.group(0) + '\n'
 
 
 def get_all_category_by_map(data_map):
@@ -58,6 +62,7 @@ class NGA:
     categories = []
     current_thread = None
     current_category = None
+    history_threads = []
 
     def get_categories(self):
         url = add_query_string(self.api_url, {'__lib': 'home', '__act': 'category'})
@@ -73,9 +78,11 @@ class NGA:
         thread_models = []
         data_list = json_data['result']['data']
         for data in data_list:
-            thread_models.append(ThreadModel(id=data['tid'], author_id=data['authorid'], author=data['author'],
-                                             create_time=timestamp_to_datetime(data['postdate']),
-                                             content=data['subject'], title=''))
+            if data['tid'] not in self.history_threads:
+                thread_models.append(ThreadModel(id=data['tid'], author_id=data['authorid'], author=data['author'],
+                                                 create_time=timestamp_to_datetime(data['postdate']),
+                                                 content=data['subject'], title=''))
+                self.history_threads.append(data['tid'])
         return thread_models
 
     def change_category(self, category_index):
@@ -85,6 +92,7 @@ class NGA:
         self.current_category = self.categories[category_index]
         self.post_page = 0
         self.thread_page = 0
+        self.history_threads = []
         return InfoModel(level=InfoLevel.INFO, text='category changed')
 
     def change_thread(self, thread_index):
@@ -111,7 +119,11 @@ class NGA:
         return self.thread_models
 
     def get_real_content(self, content: str):
-        return content.split('[/quote]')[-1]
+        return self.optimize_html_display(content.split('[/quote]')[-1])
+
+    def optimize_html_display(self, text: str):
+        text.replace('<br/>', '\n')
+        return re.sub('https://.*?\.(png|webp|gif|jpg)', re_sub_add_page_sign, text)
 
     def get_post_model_by_json(self, json_data):
         posts = []
