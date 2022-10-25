@@ -7,6 +7,7 @@ from client import NGA
 class Runner(Cmd):
     prompt = "nga -> "
     client = NGA()
+    show_thread_id = False
 
     def do_q(self, *args):
         """Quit"""
@@ -27,6 +28,12 @@ class Runner(Cmd):
             post_list = self.client.get_next_post()
             draw_posts(post_list, post_page, max_post_page)
 
+    def do_showid(self, *args):
+        self.show_thread_id = True
+
+    def do_hideid(self, *args):
+        self.show_thread_id = False
+
     def do_np(self, *args):
         """Next page of post"""
         post_page, max_post_page = self.client.post_page, self.client.max_post_page
@@ -36,7 +43,7 @@ class Runner(Cmd):
     def do_nt(self, *args):
         """Next page of thread"""
         thread_list = self.client.get_next_page_threads()
-        draw_threads(thread_list)
+        draw_threads(thread_list, show_thread_id=self.show_thread_id)
 
     def do_ct(self, idx):
         """Change current thread"""

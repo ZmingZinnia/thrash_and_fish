@@ -127,6 +127,8 @@ class NGA:
 
     def get_post_model_by_json(self, json_data):
         posts = []
+        if not json_data['result']:
+            return posts
         for item in json_data['result']:
             posts.append(PostModel(post_id=item['pid'], title=item['subject'], content=self.get_real_content(item['content']),
                                    author_id=item['author']['uid'], author=item['author']['username'],

@@ -59,9 +59,12 @@ def draw_categories(category_models):
 
 @screen_clear
 @draw_info_check
-def draw_threads(thread_models):
+def draw_threads(thread_models, show_thread_id=False):
     for idx, model in enumerate(thread_models):
-        console.print(f"{idx}: {model.content}\tauthor: {model.author}")
+        if not show_thread_id:
+            console.print(f"{idx}: {model.content}\tauthor: {model.author}")
+        else:
+            console.print(f"{idx}: {model.content}\tauthor: {model.author}. thread_id:  {model.id}")
 
 @screen_clear
 @draw_info_check
