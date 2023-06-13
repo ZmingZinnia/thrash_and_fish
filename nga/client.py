@@ -39,10 +39,18 @@ def get_all_category_by_map(data_map):
                 if 'name' in category and 'fid' in category:
                     categirey_model_list.append(CategoryModel(id=category['fid'], name=category['name']))
     # let some category forward
-    for idx, category_model in enumerate(categirey_model_list):
-        if category_model.name in TOP_CATEGORIES:
-            categirey_model_list.insert(0, categirey_model_list.pop(idx))
-    return categirey_model_list
+    top_categories = []
+    top_ids = []
+    for top_name in TOP_CATEGORIES:
+        for idx, category_model in enumerate(categirey_model_list):
+            if top_name in category_model.name:
+                top_ids.append(idx)
+    for top_id in top_ids:
+        obj = categirey_model_list[top_id]
+        top_categories.append(obj)
+    for removed_top_id in sorted(top_ids)[::-1]:
+        categirey_model_list.pop(removed_top_id)
+    return top_categories + categirey_model_list
 
 
 def add_query_string(url, query_data):
@@ -67,7 +75,7 @@ class NGA:
     def get_categories(self):
         url = add_query_string(self.api_url, {'__lib': 'home', '__act': 'category'})
         category_data = requests.post(url, headers=HEADERS).json()
-        categories = get_all_category_by_map(category_data)
+        categories = get_all_category_by_map(category_data)[:50]
         self.categories = categories
 
     def reset_progress_info(self):
