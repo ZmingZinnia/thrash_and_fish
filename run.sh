@@ -13,7 +13,7 @@ if [ "$req" != "$installed_req" ];  then
     echo "Inconsistent dependent environment"
     echo "Please use the new environment and install all dependencies using pip install"
 elif [[ "$1" =~ ^(adnmb|nga)$ ]]; then
-    python3 $SCRIPTPATH/$1/run.py
+    python $SCRIPTPATH/$1/run.py
 else
     echo "forum $1 not implemented"
 fi
