@@ -112,6 +112,12 @@ class NGA:
         self.thread_page = 0
         return InfoModel(level=InfoLevel.INFO, text='thread changed')
 
+    def change_thread_by_id(self, thread_id):
+        self.current_thread = ThreadModel(id=thread_id, author_id=0, author=0, create_time=0, content='', title='')
+        self.post_page = 0
+        self.thread_page = 0
+        return InfoModel(level=InfoLevel.INFO, text='thread changed')
+
 
     def get_next_page_threads(self) -> Union[List[ThreadModel], InfoModel]:
         if not self.current_category:

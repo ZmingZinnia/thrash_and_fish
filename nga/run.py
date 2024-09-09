@@ -28,6 +28,11 @@ class Runner(Cmd):
             post_list = self.client.get_next_post()
             draw_posts(post_list, post_page, max_post_page)
 
+    def do_jt(self, thread_id):
+        """Change current thread"""
+        info = self.client.change_thread_by_id(thread_id)
+        draw_info(info)
+
     def do_showid(self, *args):
         self.show_thread_id = True
 
