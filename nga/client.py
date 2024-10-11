@@ -165,7 +165,13 @@ class NGA:
             return InfoModel(level=InfoLevel.ERROR, text="no more post")
         url = add_query_string(self.api_url, {'__lib': 'post', '__act': 'list'})
         data = {'page': self.post_page, 'tid': self.current_thread.id}
-        rj = requests.post(url, headers=HEADERS, data=data).json()
+        r = requests.post(url, headers=HEADERS, data=data)
+        try:
+            rj = r.json()
+        except:
+            replaced_content = r.content.strip(b'\n?>')
+            rj = json.loads(replaced_content)
+
         if rj['code'] != 0:
             return InfoModel(level=InfoLevel.ERROR, text=rj['msg'])
         self.max_post_page = rj['totalPage']
