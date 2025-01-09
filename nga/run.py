@@ -60,6 +60,10 @@ class Runner(Cmd):
         info = self.client.change_category(category_number)
         draw_info(info)
 
+    def do_jc(self, category_id):
+        info = self.client.change_category_by_id(category_id)
+        draw_info(info)
+
     def do_sc(self, *args):
         """Show all categories"""
         if not self.client.categories:

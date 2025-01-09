@@ -86,6 +86,8 @@ class NGA:
         thread_models = []
         data_list = json_data['result']['data']
         for data in data_list:
+            if self.current_category.name and data['forumname'] != self.current_category.name:
+                continue
             if data['tid'] not in self.history_threads:
                 thread_models.append(ThreadModel(id=data['tid'], author_id=data['authorid'], author=data['author'],
                                                  create_time=timestamp_to_datetime(data['postdate']),
@@ -102,6 +104,14 @@ class NGA:
         self.thread_page = 0
         self.history_threads = []
         return InfoModel(level=InfoLevel.INFO, text='category changed')
+
+    def change_category_by_id(self, category_id):
+        self.current_category = CategoryModel(id=category_id, name='')
+        self.post_page = 0
+        self.thread_page = 0
+        self.history_threads = []
+        return InfoModel(level=InfoLevel.INFO, text='category changed')
+
 
     def change_thread(self, thread_index):
         if not str(thread_index).isdigit() or int(thread_index) >= len(self.thread_models):
