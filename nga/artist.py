@@ -1,10 +1,20 @@
 from os import name, system
 from rich.console import Console
+from wcwidth import wcswidth
 
 from model import InfoLevel, InfoModel
 
 ONE_PAGE_ELEMENT = 5
 console = Console()
+
+
+def ljust_wcwidth(s, width, fillchar=' '):
+    current_width = wcswidth(s)
+    fill_width = width - current_width
+    if fill_width <= 0:
+        return s
+    else:
+        return s + fillchar * fill_width
 
 
 def _screen_clear():
@@ -52,8 +62,9 @@ def draw_categories(category_models):
     for models in chunks(category_models, ONE_PAGE_ELEMENT):
         contents = []
         for offset in range(len(models)):
-            contents.append(":" .join([str(i + offset), models[offset].name]))
-        console.print('\t'.join(contents))
+            text = ":" .join([str(i + offset), models[offset].name])
+            contents.append(ljust_wcwidth(text, 21))
+        console.print('     '.join(contents))
         i += ONE_PAGE_ELEMENT
 
 
