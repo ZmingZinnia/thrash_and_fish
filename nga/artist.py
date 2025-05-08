@@ -75,3 +75,9 @@ def draw_posts(post_models, current_page, total_page):
             console.print(f"{idx}: {model.content}\t {model.author.strip()}  {model.create_time}")
         except Exception:
             console.print(f"error")
+
+
+@screen_clear
+@draw_info_check
+def draw_thread_info(tid, author_id):
+    console.print(f"thread_id: {tid} author_id: {author_id}")

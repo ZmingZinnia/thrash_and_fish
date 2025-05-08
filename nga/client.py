@@ -86,7 +86,7 @@ class NGA:
         thread_models = []
         data_list = json_data['result']['data']
         for data in data_list:
-            if self.current_category.name and data['forumname'] != self.current_category.name:
+            if self.current_category.name and data.get('forumname') and data['forumname'] != self.current_category.name:
                 continue
             if data['tid'] not in self.history_threads:
                 thread_models.append(ThreadModel(id=data['tid'], author_id=data['authorid'], author=data['author'],

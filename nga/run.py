@@ -1,6 +1,6 @@
 from cmd import Cmd
 
-from artist import draw_categories, draw_info, draw_threads, draw_posts
+from artist import draw_categories, draw_info, draw_threads, draw_posts, draw_thread_info
 from client import NGA
 
 
@@ -54,6 +54,12 @@ class Runner(Cmd):
         """Change current thread"""
         info = self.client.change_thread(idx)
         draw_info(info)
+
+    def do_stid(self, *argsf):
+        tid = self.client.current_thread.id
+        author_id = self.client.current_thread.author_id
+        draw_thread_info(tid, author_id)
+
 
     def do_cc(self, category_number):
         """Change current category"""
