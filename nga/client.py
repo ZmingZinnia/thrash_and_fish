@@ -12,6 +12,7 @@ import config
 
 COOKIE_FILE = os.path.join(os.path.split(__file__)[0], '_cookie')
 TOP_CATEGORIES = config.nga_config.get('top_categories', [])
+FAKE_CATEGORIES = config.nga_config.get('fake_categories', [])
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G9650 Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.110 Mobile Safari/537.36',
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -50,7 +51,8 @@ def get_all_category_by_map(data_map):
         top_categories.append(obj)
     for removed_top_id in sorted(top_ids)[::-1]:
         categirey_model_list.pop(removed_top_id)
-    return top_categories + categirey_model_list
+    fake_categories = [CategoryModel(id=item['fid'], name=item['name']) for item in FAKE_CATEGORIES]
+    return top_categories + fake_categories + categirey_model_list
 
 
 def add_query_string(url, query_data):
@@ -75,7 +77,7 @@ class NGA:
     def get_categories(self):
         url = add_query_string(self.api_url, {'__lib': 'home', '__act': 'category'})
         category_data = requests.post(url, headers=HEADERS).json()
-        categories = get_all_category_by_map(category_data)[:50]
+        categories = get_all_category_by_map(category_data)[:100]
         self.categories = categories
 
     def reset_progress_info(self):

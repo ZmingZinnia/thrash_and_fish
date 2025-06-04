@@ -73,9 +73,9 @@ def draw_categories(category_models):
 def draw_threads(thread_models, show_thread_id=False):
     for idx, model in enumerate(thread_models):
         if not show_thread_id:
-            console.print(f"{idx}: {model.content}\tauthor: {model.author}")
+            console.print(ljust_wcwidth(f"{idx}: {model.content}", 100), f"    author: {model.author}")
         else:
-            console.print(f"{idx}: {model.content}\tauthor: {model.author}. thread_id:  {model.id}")
+            console.print(ljust_wcwidth(f"{idx}: {model.content}", 100), f"     author: {model.author}. thread_id:  {model.id}")
 
 @screen_clear
 @draw_info_check
@@ -83,7 +83,7 @@ def draw_posts(post_models, current_page, total_page):
     console.print(f"current_page/total_page: {current_page}/{total_page}")
     for idx, model in enumerate(post_models):
         try:
-            console.print(f"{idx}: {model.content}\t {model.author.strip()}  {model.create_time}")
+            console.print(ljust_wcwidth(f"{model.create_time}-{model.author.strip()}  ", 40), f"{idx}:  {model.content}")
         except Exception:
             console.print(f"error")
 
